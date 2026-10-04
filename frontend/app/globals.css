@@ -1,0 +1,556 @@
+:root {
+  --bg: #f4f1ea;
+  --paper: #fffdf8;
+  --ink: #1d1b18;
+  --muted: #6f6a60;
+  --line: #2b2925;
+  --soft-line: #ddd6c8;
+  --accent: #d2452f;
+  --accent-ink: #ffffff;
+  --current: #ffe08a;
+  --range: #e3efff;
+  --range-edge: #4a7fd1;
+  --topbar: #1f2b3a;
+  --topbar-ink: #f3efe6;
+  --radius: 10px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15171b;
+    --paper: #1e2127;
+    --ink: #ece8df;
+    --muted: #9b968c;
+    --line: #d9d4c9;
+    --soft-line: #353a43;
+    --accent: #ef6a52;
+    --current: #6b5713;
+    --range: #1f324d;
+    --range-edge: #7ba6eb;
+    --topbar: #0e1116;
+    color-scheme: dark;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+a {
+  color: inherit;
+}
+
+h1 {
+  margin: 0 0 4px;
+  font-size: 1.7rem;
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin: 24px 0 8px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 0.85rem;
+}
+
+.error {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+code,
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--topbar);
+  color: var(--topbar-ink);
+}
+
+.topbar a {
+  text-decoration: none;
+}
+
+.brand {
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: 0.02em;
+}
+
+.brand span {
+  color: var(--accent);
+}
+
+.topbar nav {
+  display: flex;
+  gap: 18px;
+}
+
+.page {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+/* ---------- controls */
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+input,
+select,
+textarea {
+  background: var(--paper);
+  border: 1px solid var(--soft-line);
+  border-radius: 8px;
+  padding: 7px 10px;
+  min-width: 0;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+button {
+  cursor: pointer;
+  border: 1px solid var(--soft-line);
+  background: var(--paper);
+  border-radius: 8px;
+  padding: 7px 12px;
+}
+
+button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+button.play {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 700;
+  padding: 10px 22px;
+  min-width: 110px;
+}
+
+button.play.on {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+}
+
+button.ghost {
+  background: transparent;
+}
+
+button.small {
+  padding: 4px 10px;
+  font-size: 0.85rem;
+}
+
+button.link {
+  border: none;
+  background: none;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.danger {
+  color: var(--accent);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.field > input,
+.field > select,
+.field > textarea,
+.field .tempo {
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.field.wide {
+  flex: 1 1 260px;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tempo {
+  display: flex;
+  gap: 4px;
+}
+
+.tempo input {
+  width: 70px;
+  text-align: center;
+}
+
+.tempo button {
+  width: 36px;
+  padding: 7px 0;
+}
+
+/* ---------- library */
+
+.library-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.song-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.song-list li {
+  background: var(--paper);
+  border: 1px solid var(--soft-line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.song-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.song-card:hover .song-title {
+  color: var(--accent);
+}
+
+.song-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.song-meta {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.song-badges {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--soft-line);
+}
+
+.badge.mine {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.song-actions {
+  display: flex;
+  gap: 16px;
+  padding: 8px 16px 12px;
+  font-size: 0.9rem;
+}
+
+/* ---------- player */
+
+.song-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.song-head p {
+  margin: 0;
+}
+
+.status {
+  font-size: 1.1rem;
+  font-weight: 700;
+  white-space: nowrap;
+  padding-top: 6px;
+}
+
+.count-in {
+  display: inline-block;
+  min-width: 44px;
+  text-align: center;
+  font-size: 1.6rem;
+  color: var(--accent);
+}
+
+.transport {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 14px;
+  padding: 14px;
+  background: var(--paper);
+  border: 1px solid var(--soft-line);
+  border-radius: var(--radius);
+}
+
+.loop-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin: 16px 0 10px;
+}
+
+.loop-bar .hint {
+  font-size: 0.85rem;
+  flex: 1 1 200px;
+}
+
+.mixer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  margin: 20px 0 12px;
+}
+
+.channel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.channel label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.channel-name {
+  text-transform: capitalize;
+  width: 52px;
+}
+
+.mute.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* ---------- chord chart (iReal style) */
+
+.chart {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  background: var(--paper);
+  border: 1px solid var(--soft-line);
+  border-radius: var(--radius);
+  padding: 18px 18px 18px 14px;
+  row-gap: 14px;
+}
+
+.bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 74px;
+  padding: 10px 8px 6px 14px;
+  border: none;
+  border-left: 2px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  text-align: left;
+  transition: background 0.08s;
+}
+
+.bar:disabled {
+  opacity: 1;
+}
+
+.bar:not(:disabled):hover {
+  background: color-mix(in srgb, var(--range) 60%, transparent);
+}
+
+.bar:nth-child(4n) {
+  border-right: 2px solid var(--line);
+}
+
+.bar.final {
+  border-right: 6px double var(--line);
+}
+
+.bar.in-range {
+  background: var(--range);
+  box-shadow: inset 0 -3px 0 var(--range-edge);
+}
+
+.bar.current {
+  background: var(--current);
+}
+
+.bar-number {
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+
+.bar-chords {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.bar-chords.n1 {
+  justify-content: flex-start;
+  padding-left: 6px;
+}
+
+.chord {
+  font-family: "Marker Felt", "Comic Neue", "Chalkboard SE", "Segoe Print", Georgia, serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.bar-chords:not(.n1) .chord {
+  font-size: 1.35rem;
+}
+
+.chord .acc {
+  font-size: 0.75em;
+  vertical-align: 0.25em;
+}
+
+.chord .quality {
+  font-size: 0.58em;
+  margin-left: 1px;
+}
+
+.chord .bass {
+  font-size: 0.6em;
+}
+
+.chord.nc {
+  font-size: 1.1rem;
+}
+
+.repeat {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--muted);
+  padding-left: 18px;
+}
+
+/* ---------- editor */
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.editor-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+@media (max-width: 640px) {
+  .chart {
+    padding: 10px 8px;
+  }
+
+  .bar {
+    min-height: 56px;
+    padding: 12px 2px 4px 6px;
+  }
+
+  .chord {
+    font-size: 1.2rem;
+  }
+
+  .bar-chords:not(.n1) .chord {
+    font-size: 0.85rem;
+  }
+
+  .bar-chords {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .song-head {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .transport {
+    gap: 10px;
+  }
+}

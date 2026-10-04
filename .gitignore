@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+backend/data/user_songs.json
+backend/data/*.tmp
+node_modules/
+.next/
+*.tsbuildinfo
+next-env.d.ts
