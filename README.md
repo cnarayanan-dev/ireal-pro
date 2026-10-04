@@ -24,13 +24,23 @@ in a loop while the chord chart highlights the current bar.
 
 ## Running
 
-Backend (port 8000):
+Backend (port 8000). Create a Python virtual environment once:
 
 ```bash
 cd backend
+python3 -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+```
+
+Then start the server (with the venv active):
+
+```bash
 uvicorn app.main:app --reload --port 8000
 ```
+
+Next time, only `source .venv/bin/activate` is needed before starting.
+Run `deactivate` to leave the venv.
 
 Frontend (port 3000), in a second terminal:
 
@@ -46,7 +56,7 @@ Open http://localhost:3000. The frontend proxies `/api/*` to the backend. Set
 ## Tests
 
 ```bash
-cd backend && python -m pytest
+cd backend && source .venv/bin/activate && python -m pytest
 cd frontend && npm run typecheck && npm run build
 ```
 
